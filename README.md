@@ -1,34 +1,95 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# SweepSouth assessment
 
-## Getting Started
+This project serves as part of the [SweepSouth](https://sweepsouth.com/) interview process.
 
-First, run the development server:
+## Setting up for development
+
+### Cloning the code
+
+To clone, you need to run the following command (assuming that `git` is installed on your machine.
 
 ```bash
-npm run dev
-# or
+git clone https://github.com/chynamyerz/sweepsouth-assessment.git
+```
+
+A directory of name `sweepsouth-assessment` with the code will be created.
+
+You will need to install the required Node packages and run the development server. Node and yarn must be installed on your machine.
+
+```bash
+cd sweepsouth-assessment
+yarn
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Workflow policy
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+No code changes should be pushed to either the development or the master branch.
+Instead, create a new local branch from the development branch, make your changes and push the branch to the Github repository.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+Afterwards make a pull request in Github from the new branch to the development branch.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+For every new component to be created, a certain folder and files structure must be followed.
 
-## Learn More
+### Structure of Code related comments.
 
-To learn more about Next.js, take a look at the following resources:
+##### Components should go into "components" folder.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Say we have 2 major components with some sub-components in each:
+Component: Profile
+Sub-Components: ProfileImage, ProfileSummary.
+Folder Structure:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```
+|_ components
+  |_ Profile
+  |_ **tests**
+    |_ Profile.tsx
+  |_ Profile.tsx
+  |_ types.ts
+  |_ constants.ts
+  |_ styles.ts
+  |_ useProfile.ts
+  |_ components
+    |_ ProfileImage
+      |_ **tests**
+        |_ ProfileImage.tsx
+      |_ ProfileImage.tsx
+      |_ types.ts
+      |_ constants.ts
+      |_ styles.ts
+    |_ ProfileSummary
+      |_ **tests**
+        |_ ProfileSummary.tsx
+      |_ ProfileSummary.tsx
+      |_ types.ts
+      |_ constants.ts
+```
 
-## Deploy on Vercel
+NOTE: if component is complicated and has sub-components, create "components" folder in this component and keep sub-components in there.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- All types and interfaces should be in "types.ts" file.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- All constants should be in "constants.ts" file.
+
+- Styling related stuff should be in "styles.ts" files.
+
+- Tests should be kept next to its component, in "**tests**" folder and should be named as "Component.tsx".
+
+- Functional components + React Hooks should be used.
+
+- Components should be as lean as possible.
+
+- Comments in code where appropriate, not too much, code should be self documenting as much as possible.
+
+- Should use `index.ts` exporters to keep import statements everywhere neat and without redundancies.
+
+- [Referrence to the suggested folders and files dtructure](https://hackernoon.com/structuring-projects-and-naming-components-in-react-1261b6e18d76)
+
+In principle, someone else should check the pull request, and approve or reject for further changes.
+
+Once work on a branch other than master or development is done, that branch should be merged to development and be deleted.
+
+### Running and testing the application
+
+To run the application execute the command `yarn dev` in the project's root directory.
