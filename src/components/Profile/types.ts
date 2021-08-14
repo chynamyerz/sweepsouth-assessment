@@ -11,5 +11,8 @@ export interface ProfileProps {
    * Profile image url
    */
   imgUrl: string;
-  // TODO: Add more properties
+  /**
+   * Profile city
+   */
+  city: string;
 }
