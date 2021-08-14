@@ -1,4 +1,3 @@
-import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import type { NextPage } from 'next';
@@ -18,14 +17,21 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Grid item xs={12}>
-        <Box mx={25}>
-          <Profile
-            id={'p1'}
-            name={'profile 1'}
-            imgUrl={'https://some-image-url'}
-          />
-        </Box>
+      <Grid container spacing={2}>
+        {[1, 2, 3, 4, 5, 6, 7].map((profile) => {
+          return (
+            <Grid key={profile} item xs={12} sm={6} md={4} lg={3}>
+              <Profile
+                id={'p1'}
+                name={'profile 1'}
+                city={'South Africs, Kwa-Zulu Natal, Durban city'}
+                imgUrl={
+                  'https://images.unsplash.com/photo-1628935746762-14b90583073f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80'
+                }
+              />
+            </Grid>
+          );
+        })}
       </Grid>
     </Container>
   );
