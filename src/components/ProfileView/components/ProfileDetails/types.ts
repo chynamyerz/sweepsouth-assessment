@@ -1,15 +1,6 @@
 export interface ProfileDetailsProps {
   /**
-   * Profile unique identifier
+   * Profile details
    */
-  id: string;
-  /**
-   * Profile name
-   */
-  name: string;
-  /**
-   * Profile city
-   */
-  city: string;
-  // TODO: Add more properties
+  profile: any;
 }

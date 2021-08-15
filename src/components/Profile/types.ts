@@ -1,18 +1,5 @@
+import { IProfile } from '../../../lib/state/profileContext/types';
+
 export interface ProfileProps {
-  /**
-   * Profile unique identifier
-   */
-  id: string;
-  /**
-   * Profile name
-   */
-  name: string;
-  /**
-   * Profile image url
-   */
-  imgUrl: string;
-  /**
-   * Profile city
-   */
-  city: string;
+  profile: IProfile;
 }
