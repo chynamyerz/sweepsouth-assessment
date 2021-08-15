@@ -4,13 +4,17 @@ import Avatar from '@material-ui/core/Avatar';
 
 import { ProfileImageProps } from './types';
 
-export const ProfileImage: FC<ProfileImageProps> = ({ imgUrl }) => {
+import { useStyles } from './styles';
+
+export const ProfileImage: FC<ProfileImageProps> = ({ imgUrl, className }) => {
+  const classes = useStyles();
   return (
     <Grid container item justifyContent={'center'}>
       <Avatar
         alt={'Profile image'}
         src={imgUrl}
         style={{ height: 200, width: 200 }}
+        className={`${classes.img} ${className ?? ''}`}
       />
     </Grid>
   );
