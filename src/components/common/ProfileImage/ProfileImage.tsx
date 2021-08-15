@@ -13,8 +13,7 @@ export const ProfileImage: FC<ProfileImageProps> = ({ imgUrl, className }) => {
       <Avatar
         alt={'Profile image'}
         src={imgUrl}
-        style={{ height: 200, width: 200 }}
-        className={`${classes.img} ${className ?? ''}`}
+        className={`${classes.profileImage} ${className ?? ''}`}
       />
     </Grid>
   );

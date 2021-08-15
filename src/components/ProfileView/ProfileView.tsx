@@ -26,7 +26,10 @@ export const ProfileView: FC<ProfileViewProps> = ({
         <Card>
           <CardContent>
             <Box>
-              <ProfileImage imgUrl={imgUrl} className={classes.img} />
+              <ProfileImage
+                imgUrl={imgUrl}
+                className={classes.profileViewImage}
+              />
             </Box>
             <hr />
             <ProfileDetails id={id} name={name} city={city} />
