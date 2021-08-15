@@ -6,19 +6,35 @@ import CardContent from '@material-ui/core/CardContent';
 
 import { ProfileImage, ProfileSummary } from '../common';
 
+import { IProfile } from '../../../lib/state/profileContext/types';
 import { ProfileProps } from './types';
 
-export const Profile: FC<ProfileProps> = ({ imgUrl, name, city }) => {
+export const Profile: FC<ProfileProps> = ({ profile }) => {
+  const {
+    name: { title, first, last },
+    picture: { large },
+    location: {
+      country,
+      state,
+      city,
+      street: { number: streetNumber, name: streetName },
+      postcode,
+    },
+  } = profile as IProfile;
+
   return (
     <Grid container item justifyContent={'center'}>
       <Card>
         <CardContent>
           <Box>
-            <ProfileImage imgUrl={imgUrl} />
+            <ProfileImage imgUrl={large} />
           </Box>
           <hr />
           <Box>
-            <ProfileSummary name={name} city={city} />
+            <ProfileSummary
+              name={`${title} ${first} ${last}`}
+              city={`${country}, ${state}, ${city}, ${streetNumber} ${streetName}, ${postcode}`}
+            />
           </Box>
         </CardContent>
       </Card>

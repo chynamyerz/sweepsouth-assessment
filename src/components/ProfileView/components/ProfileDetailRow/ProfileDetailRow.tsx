@@ -13,9 +13,13 @@ export const ProfileDetailRow: FC<ProfileDetailRowProps> = ({
   const classes = useStyles();
 
   return (
-    <Grid container item direction={'row'}>
-      <Box className={classes.label}>{label}:</Box>
-      <Box className={classes.value}>{value}</Box>
+    <Grid container item sm={12}>
+      <Grid item className={classes.label} sm={6}>
+        {label}:
+      </Grid>
+      <Grid item sm={6}>
+        {value}
+      </Grid>
     </Grid>
   );
 };
