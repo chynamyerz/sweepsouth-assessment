@@ -6,7 +6,7 @@ import CardContent from '@material-ui/core/CardContent';
 
 import { ProfileImage, ProfileSummary } from '../common';
 
-import { IProfile } from '../../../lib/state/profileContext/types';
+import { IProfile } from '../../lib/state/profileContext/types';
 import { ProfileProps } from './types';
 import { useStyles } from './styles';
 
