@@ -1,6 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { ChangeEvent, useEffect, useCallback, useState } from 'react';
+import { debounce } from 'lodash';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+import TextField, { TextFieldProps } from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import type { InferGetStaticPropsType, NextPage } from 'next';
 import Head from 'next/head';
 import { GetStaticProps } from 'next';
@@ -18,6 +22,11 @@ const Home: NextPage = (
 ) => {
   const { push } = useRouter();
   const { profiles, setProfile, setProfiles } = useProfile();
+  const [filteredProfiles, setFilteredProfiles] =
+    useState<IProfile[]>(profiles);
+  const [searchText, setSearchText] = useState<string>('');
+  const [searchProperties, setSearchProperties] = useState<string[]>(['Name']);
+  const options = ['Id', 'Name', 'Surname', 'Country', 'City', 'Postcode'];
 
   /**
    * Effects
@@ -28,6 +37,10 @@ const Home: NextPage = (
       setLocalStorageItem('profiles', { profiles: props?.profiles ?? [] });
     }
   }, [props.profiles]);
+
+  useEffect(() => {
+    handleDebounce(searchText, searchProperties);
+  }, [searchText, searchProperties]);
 
   /**
    * Handlers
@@ -40,6 +53,80 @@ const Home: NextPage = (
     }
   };
 
+  const handleSelectOnChange = (values: any) => {
+    setSearchProperties(values);
+  };
+
+  const handleSearchTextChange = (
+    event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => {
+    setSearchText(event?.target?.value);
+  };
+
+  // Wait for 3 seconds when typing searching
+  const handleDebounce = useCallback(
+    debounce((search: string, properties: string[]) => {
+      handleSearch(search, properties);
+    }, 3000),
+    []
+  );
+
+  const handleSearch = (search: string, properties: string[]) => {
+    const filtered: IProfile[] = [];
+    properties.forEach((property) => {
+      switch (property) {
+        case 'Id':
+          filtered.push(
+            ...profiles.filter((profile) =>
+              profile.id.name.toLowerCase().includes(search.toLowerCase())
+            )
+          );
+          break;
+        case 'Name':
+          filtered.push(
+            ...profiles.filter((profile) =>
+              profile.name.first.toLowerCase().includes(search.toLowerCase())
+            )
+          );
+          break;
+        case 'Surname':
+          filtered.push(
+            ...profiles.filter((profile) =>
+              profile.name.last.toLowerCase().includes(search.toLowerCase())
+            )
+          );
+          break;
+        case 'Country':
+          filtered.push(
+            ...profiles.filter((profile) =>
+              profile.location.country
+                .toLowerCase()
+                .includes(search.toLowerCase())
+            )
+          );
+          break;
+        case 'City':
+          filtered.push(
+            ...profiles.filter((profile) =>
+              profile.location.city.toLowerCase().includes(search.toLowerCase())
+            )
+          );
+          break;
+        default:
+          filtered.push(
+            ...profiles.filter((profile) =>
+              profile.name.first
+                .toLowerCase()
+                .toLowerCase()
+                .includes(search.toLowerCase())
+            )
+          );
+          break;
+      }
+    });
+    setFilteredProfiles(filtered);
+  };
+
   return (
     <Container>
       <Head>
@@ -50,22 +137,54 @@ const Home: NextPage = (
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Grid container spacing={2}>
-        {profiles?.map((profile: any, index: number) => {
-          return (
-            <Grid
-              key={index}
-              item
-              xs={12}
-              sm={6}
-              md={4}
-              lg={3}
-              onClick={() => handleProfileView(profile)}
-            >
-              <Profile profile={profile} />
+      <Grid container direction={'column'}>
+        <Box marginBottom={4} marginTop={4}>
+          <Grid container spacing={2}>
+            <Grid item xs={8}>
+              <TextField
+                id="outlined-basic"
+                label="Start searching"
+                variant="outlined"
+                onChange={handleSearchTextChange}
+                defaultValue={searchText}
+                fullWidth
+              />
             </Grid>
-          );
-        })}
+            <Grid item xs={4}>
+              <Autocomplete
+                id="combo-box-demo"
+                defaultValue={searchProperties}
+                options={options}
+                getOptionLabel={(option: string) => option}
+                renderInput={(
+                  params: JSX.IntrinsicAttributes & TextFieldProps
+                ) => (
+                  <TextField {...params} label="Search by" variant="outlined" />
+                )}
+                onChange={(event, values) => handleSelectOnChange(values)}
+                multiple
+                fullWidth
+              />
+            </Grid>
+          </Grid>
+        </Box>
+        <Grid container item spacing={2}>
+          {filteredProfiles?.map((profile: any, index: number) => {
+            return (
+              <Grid
+                key={index}
+                item
+                xs={12}
+                sm={6}
+                md={4}
+                lg={3}
+                onClick={() => handleProfileView(profile)}
+              >
+                <Profile profile={profile} />
+              </Grid>
+            );
+          })}
+        </Grid>
       </Grid>
     </Container>
   );

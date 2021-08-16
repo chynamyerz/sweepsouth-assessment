@@ -8,6 +8,7 @@ import { ProfileImage, ProfileSummary } from '../common';
 
 import { IProfile } from '../../../lib/state/profileContext/types';
 import { ProfileProps } from './types';
+import { useStyles } from './styles';
 
 export const Profile: FC<ProfileProps> = ({ profile }) => {
   const {
@@ -21,10 +22,11 @@ export const Profile: FC<ProfileProps> = ({ profile }) => {
       postcode,
     },
   } = profile as IProfile;
+  const classes = useStyles();
 
   return (
     <Grid container item justifyContent={'center'}>
-      <Card>
+      <Card className={classes.pointer}>
         <CardContent>
           <Box>
             <ProfileImage imgUrl={large} />
