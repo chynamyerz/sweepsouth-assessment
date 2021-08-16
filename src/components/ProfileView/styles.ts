@@ -6,5 +6,8 @@ export const useStyles = makeStyles((theme: Theme) => {
       height: '300px !important',
       width: '300px !important',
     },
+    pointer: {
+      cursor: 'pointer',
+    },
   };
 });
