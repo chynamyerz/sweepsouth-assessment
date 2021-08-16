@@ -1,3 +1,1 @@
-export interface ProfileViewProps {
-  // TODO: Add properties
-}
+export interface ProfileViewProps {}
