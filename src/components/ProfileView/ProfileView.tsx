@@ -11,9 +11,9 @@ import { ProfileImage } from '../common';
 import { ProfileDetails } from './components';
 
 import { useStyles } from './styles';
-import { useProfile } from '../../../lib/state';
+import { useProfile } from '../../lib/state';
 import { getLocalStorageItem, setLocalStorageItem } from '../../utils/helper';
-import { IProfile } from '../../../lib/state/profileContext/types';
+import { IProfile } from '../../lib/state/profileContext/types';
 
 export const ProfileView: FC = () => {
   const { profile, profiles, setProfile } = useProfile();
