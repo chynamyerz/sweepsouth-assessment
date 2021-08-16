@@ -7,7 +7,7 @@ import {
   useContext,
   useState,
 } from 'react';
-import { getLocalStorageItem } from '../../../src/utils/helper';
+import { getLocalStorageItem } from '../../../utils/helper';
 import { IProfile } from './types';
 
 const ProfileContext: Context<{

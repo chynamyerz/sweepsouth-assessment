@@ -12,8 +12,8 @@ import { GetStaticProps } from 'next';
 import { API_URL } from '../src/utils/constants';
 
 import { useRouter } from 'next/router';
-import { IProfile } from '../lib/state/profileContext/types';
-import { useProfile } from '../lib/state';
+import { IProfile } from '../src/lib/state/profileContext/types';
+import { useProfile } from '../src/lib/state';
 import { Profile } from '../src/components';
 import { setLocalStorageItem } from '../src/utils/helper';
 
@@ -21,7 +21,8 @@ const Home: NextPage = (
   props: InferGetStaticPropsType<typeof getStaticProps>
 ) => {
   const { push } = useRouter();
-  const { profiles, setProfile, setProfiles } = useProfile();
+  const { setProfile, setProfiles } = useProfile();
+  const [profiles] = useState<IProfile[]>(props.profiles ?? []);
   const [filteredProfiles, setFilteredProfiles] =
     useState<IProfile[]>(profiles);
   const [searchText, setSearchText] = useState<string>('');
@@ -32,11 +33,11 @@ const Home: NextPage = (
    * Effects
    */
   useEffect(() => {
-    if (props?.profiles && setProfiles) {
-      setProfiles(props?.profiles ?? []);
-      setLocalStorageItem('profiles', { profiles: props?.profiles ?? [] });
+    if (profiles && setProfiles) {
+      setProfiles(profiles ?? []);
+      setLocalStorageItem('profiles', { profiles: profiles ?? [] });
     }
-  }, [props.profiles]);
+  }, [profiles]);
 
   useEffect(() => {
     handleDebounce(searchText, searchProperties);
@@ -63,11 +64,11 @@ const Home: NextPage = (
     setSearchText(event?.target?.value);
   };
 
-  // Wait for 3 seconds when typing searching
+  // Wait for 2 seconds when typing searching
   const handleDebounce = useCallback(
     debounce((search: string, properties: string[]) => {
       handleSearch(search, properties);
-    }, 3000),
+    }, 1000),
     []
   );
 
